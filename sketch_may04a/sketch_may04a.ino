@@ -41,10 +41,9 @@ void setup() {
 //============================================
 // Global Variables definition
 //============================================
-
-int Yaxis =0;//Joystick Y Axis
 int Xaxis = 0; //Joystick X Asis
-
+int Yaxis = 0; //Joystick Y Axis
+int Psegm = 0; //Segment position
 
 //============================================
 // Loop Module code runs continuously
@@ -53,10 +52,11 @@ int Xaxis = 0; //Joystick X Asis
 void loop() { 
   Yaxis = analogRead(A0)/128;
   Xaxis = analogRead(A1)/128;
+  Psegm = jumpSegment();
   
-  lc.setLed(1,Xaxis,Yaxis,true);
+  lc.setLed(Psegm,Xaxis,Yaxis,true);
   delay(100);
-  lc.setLed(1,Xaxis,Yaxis,false);
+  lc.setLed(Psegm,Xaxis,Yaxis,false);
 }
 //============================================
 // End of Loop Module code runs continuously
@@ -67,7 +67,14 @@ void loop() {
 //============================================
 // User Defined Functions
 //============================================
+int jumpSegment(){
+ //@Purpose: Jump to next segment when keeping joystick on the edge of the module  
+ //@Return: Function returns integer value from 0 to 3
+ 
+ return(0); 
 
+  
+}
 
 //============================================
 // End Of User Defined Functions
