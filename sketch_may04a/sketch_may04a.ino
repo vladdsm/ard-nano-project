@@ -50,13 +50,18 @@ int Psegm = 0; //Segment position
 //============================================
 
 void loop() { 
-  Yaxis = analogRead(A0)/128;
-  Xaxis = analogRead(A1)/128;
-  Psegm = jumpSegment();
+  Yaxis = analogRead(A0)/128; //value from 0 to 7, default 4
+  Serial.print(" YAxis: "); Serial.print(Yaxis);
+  Xaxis = analogRead(A1)/128; //value from 0 to 7, default 3
+  Serial.print(" XAxis: "); Serial.print(Xaxis);
+  Psegm = jumpSegment(Xaxis);
   
   lc.setLed(Psegm,Xaxis,Yaxis,true);
   delay(100);
   lc.setLed(Psegm,Xaxis,Yaxis,false);
+
+ 
+  
 }
 //============================================
 // End of Loop Module code runs continuously
@@ -67,11 +72,18 @@ void loop() {
 //============================================
 // User Defined Functions
 //============================================
-int jumpSegment(){
+int jumpSegment(int xpos){
  //@Purpose: Jump to next segment when keeping joystick on the edge of the module  
  //@Return: Function returns integer value from 0 to 3
+ int result = 0;
+ if(xpos < 1 && result == 0) result = 0;
+ if(xpos > 6 && result == 0) result = 1;
+ if(xpos > 6 && result == 1) result = 2;
+ if(xpos > 6 && result == 2) result = 3;
+ if(xpos > 6 && result == 3) result = 3;
  
- return(0); 
+ 
+ return(result); 
 
   
 }
