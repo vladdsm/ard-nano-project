@@ -42,7 +42,8 @@ void setup() {
 // Global Variables definition
 //============================================
 
-int Zahl =0;
+int Yaxis =0;//Joystick Y Axis
+int Xaxis = 0; //Joystick X Asis
 
 
 //============================================
@@ -50,11 +51,12 @@ int Zahl =0;
 //============================================
 
 void loop() { 
-  Zahl = analogRead(A0)/128;
+  Yaxis = analogRead(A0)/128;
+  Xaxis = analogRead(A1)/128;
   
-  lc.setLed(0,0,Zahl,true);
+  lc.setLed(1,Xaxis,Yaxis,true);
   delay(100);
-  lc.setLed(0,0,Zahl,false);
+  lc.setLed(1,Xaxis,Yaxis,false);
 }
 //============================================
 // End of Loop Module code runs continuously
@@ -65,7 +67,6 @@ void loop() {
 //============================================
 // User Defined Functions
 //============================================
-
 
 
 //============================================
