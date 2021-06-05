@@ -48,7 +48,7 @@ void setup() {
   //initialize display
   for(int i=0;i<4;i++){
     lc.shutdown(i,false);
-    lc.setIntensity(i,16);
+    lc.setIntensity(i,2);
     lc.clearDisplay(i);
   }
   
@@ -64,10 +64,11 @@ void setup() {
 //============================================
 
 void loop() { 
-  Yaxis = analogRead(A0)/128; //value from 0 to 7, default 4
-  //Serial.print(" YAxis: "); Serial.print(Yaxis);
   Xaxis = analogRead(A1)/128; //value from 0 to 7, default 3
-  //Serial.print(" XAxis: "); Serial.print(Xaxis);
+  //Serial.println(" XAxis: "); Serial.print(Xaxis);
+  Yaxis = analogRead(A0)/128; //value from 0 to 7, default 4
+  //Serial.println(" YAxis: "); Serial.print(Yaxis);
+
   Psegm = jumpSegment(Xaxis);
 
   //set state of LED
