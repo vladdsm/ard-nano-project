@@ -1,9 +1,10 @@
-//Punkt auf Matrix bewegen:
-
-//We always have to include the library
+//+------------------------------------------------------------------------------+
+//|                                                     Punkt auf Matrix bewegen:|
+//|                                             Copyright 2021,Viacheslav Zhbanko| 
+//|                                                            Gymnasium Thun G23|
+//+------------------------------------------------------------------------------+
+//Include the library to control LED see http://wayoda.github.io/LedControl/pages/software
 #include "LedControl.h"
-// http://wayoda.github.io/LedControl/pages/software
-
 
 /*
  Now we need a LedControl to work with.
@@ -11,7 +12,7 @@
  pin 12 is connected to the DataIn 
  pin 11 is connected to the CLK 
  pin 10 is connected to LOAD 
- We have only a single MAX72XX.
+ We have 4 cascaded modules MAX72XX.
  */
 LedControl lc=LedControl(12,11,10,4);
 
@@ -92,6 +93,8 @@ int jumpSegment(int xpos){
 
   
 }
+
+
 
 //============================================
 // End Of User Defined Functions
