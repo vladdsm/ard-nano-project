@@ -39,7 +39,7 @@ int Xdir  = 0; //Direction in X axis
 int Ydir  = 0; //Direction in Y axis
 int Tloop = 200;
 //============================================
-// Initialization Module code runs 1x at start
+// Setup Module: code runs 1x at start
 //============================================
 
 
@@ -63,13 +63,13 @@ void setup() {
 
 
 //============================================
-// Loop Module code runs continuously
+// Loop Module: code runs continuously
 //============================================
 
 void loop() { 
-  Xaxis = analogRead(A1)/128; //value from 0 to 7, default 3
+  Xaxis = analogRead(A0)/128; //value from 0 to 7, default 3
   //Serial.println(" XAxis: "); Serial.print(Xaxis);
-  Yaxis = analogRead(A0)/128; //value from 0 to 7, default 4
+  Yaxis = analogRead(A1)/128; //value from 0 to 7, default 4
   //Serial.println(" YAxis: "); Serial.print(Yaxis);
   
   //Change position of point if needed
