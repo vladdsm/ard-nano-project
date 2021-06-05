@@ -23,11 +23,11 @@ int zeit = 200;
 
 
 void setup() {
-  
-  pinMode(A1,INPUT);
-  pinMode(2,OUTPUT);
-  digitalWrite(2,HIGH);
-  Serial.begin(9600);
+   
+  pinMode(2,OUTPUT);         //set D2 pin as Output
+  digitalWrite(2,HIGH);      //activate D2 to control Joystick
+  Serial.begin(9600);        //activate serial monitor, use Serial.print(var) to view status
+  //initialize display
   for(int i=0;i<4;i++){
     lc.shutdown(i,false);
     lc.setIntensity(i,8);
