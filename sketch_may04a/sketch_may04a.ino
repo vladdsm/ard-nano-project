@@ -4,8 +4,19 @@
 //|                                                            Gymnasium Thun G23|
 //+------------------------------------------------------------------------------+
 //Include the library to control LED see http://wayoda.github.io/LedControl/pages/software
+//
+//============================================
+// Hardware definition
+//============================================
+// see: 
+//
+//============================================
+// Include libraries
+//============================================
 #include "LedControl.h"
-
+//============================================
+// Properties definition
+//============================================
 /*
  Now we need a LedControl to work with.
  ***** Control the Pins! *****
@@ -16,7 +27,14 @@
  */
 LedControl lc=LedControl(12,11,10,4);
 
-int zeit = 200;
+//============================================
+// Global Variables definition
+//============================================
+int Xaxis = 0; //Joystick X Asis
+int Yaxis = 0; //Joystick Y Axis
+int Psegm = 0; //Segment position
+
+int Tloop = 200;
 //============================================
 // Initialization Module code runs 1x at start
 //============================================
@@ -30,7 +48,7 @@ void setup() {
   //initialize display
   for(int i=0;i<4;i++){
     lc.shutdown(i,false);
-    lc.setIntensity(i,8);
+    lc.setIntensity(i,16);
     lc.clearDisplay(i);
   }
   
@@ -39,12 +57,7 @@ void setup() {
 // End of Initialization Module
 //============================================
 
-//============================================
-// Global Variables definition
-//============================================
-int Xaxis = 0; //Joystick X Asis
-int Yaxis = 0; //Joystick Y Axis
-int Psegm = 0; //Segment position
+
 
 //============================================
 // Loop Module code runs continuously
@@ -56,9 +69,11 @@ void loop() {
   Xaxis = analogRead(A1)/128; //value from 0 to 7, default 3
   //Serial.print(" XAxis: "); Serial.print(Xaxis);
   Psegm = jumpSegment(Xaxis);
-  
+
+  //set state of LED
   lc.setLed(Psegm,Xaxis,Yaxis,true);
-  delay(100);
+  //delay
+  delay(Tloop);
   lc.setLed(Psegm,Xaxis,Yaxis,false);
 
  
