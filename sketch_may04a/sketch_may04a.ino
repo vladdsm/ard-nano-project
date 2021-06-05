@@ -33,7 +33,10 @@ LedControl lc=LedControl(12,11,10,4);
 int Xaxis = 0; //Joystick X Asis
 int Yaxis = 0; //Joystick Y Axis
 int Psegm = 0; //Segment position
-
+int Xpos  = 0; //Position in X axis
+int Ypos  = 0; //Position in Y axis
+int Xdir  = 0; //Direction in X axis
+int Ydir  = 0; //Direction in Y axis
 int Tloop = 200;
 //============================================
 // Initialization Module code runs 1x at start
@@ -68,15 +71,19 @@ void loop() {
   //Serial.println(" XAxis: "); Serial.print(Xaxis);
   Yaxis = analogRead(A0)/128; //value from 0 to 7, default 4
   //Serial.println(" YAxis: "); Serial.print(Yaxis);
+  
+  //Change position of point if needed
+  Xdir = moveDir(Xaxis, Xdir);
+  Ydir = moveDir(Yaxis, Ydir);
 
+  //Change position of segment if needed
   Psegm = jumpSegment(Yaxis, Psegm);
-  delay(100);
-
+  
   //set state of LED
-  lc.setLed(Psegm,Xaxis,Yaxis,true);
+  lc.setLed(Psegm,Xdir,Ydir,true);
   //delay
   delay(Tloop);
-  lc.setLed(Psegm,Xaxis,Yaxis,false);
+  lc.setLed(Psegm,Xdir,Ydir,false);
 
  
   
@@ -92,6 +99,8 @@ void loop() {
 //============================================
 int jumpSegment(int xpos, int segment){
  //@Purpose: Jump to next segment when keeping joystick on the edge of the module  
+ //@xpos    integer, input from Joystic
+ //@segment integer, provided current position of segment
  //@Return: Function returns integer value from 0 to 3
  int result = 0;
  
@@ -111,7 +120,19 @@ int jumpSegment(int xpos, int segment){
 
 }
 
-
+int moveDir (int AxPos, int oldpos) {
+ //@Purpose: defines new position of point on X or Y axis based on Joystic position and old position
+ //@AxPos  integer, input from Joystic
+ //@oldpos integer, provided old position
+ //@Return: Function returns integer value from 0 to 7
+ int result = 0;
+ if(AxPos == 0 && oldpos == 0) {result = 0;}
+ else if(AxPos == 7 && oldpos == 7) {result = 7;}
+ else if(AxPos == 0) {result = oldpos - 1;}
+ else if(AxPos == 7) {result = oldpos + 1;}
+ else result = oldpos;
+ return(result);
+}
 
 //============================================
 // End Of User Defined Functions
