@@ -69,7 +69,8 @@ void loop() {
   Yaxis = analogRead(A0)/128; //value from 0 to 7, default 4
   //Serial.println(" YAxis: "); Serial.print(Yaxis);
 
-  Psegm = jumpSegment(Xaxis);
+  Psegm = jumpSegment(Yaxis, Psegm);
+  delay(100);
 
   //set state of LED
   lc.setLed(Psegm,Xaxis,Yaxis,true);
@@ -89,25 +90,25 @@ void loop() {
 //============================================
 // User Defined Functions
 //============================================
-int jumpSegment(int xpos){
+int jumpSegment(int xpos, int segment){
  //@Purpose: Jump to next segment when keeping joystick on the edge of the module  
  //@Return: Function returns integer value from 0 to 3
  int result = 0;
- /*
+ 
  //moving right
- if(xpos < 1 && result == 0) result = 0;
- if(xpos < 1 && result == 1) result = 0;
- if(xpos < 1 && result == 2) result = 1;
- if(xpos < 1 && result == 3) result = 2;
+ if(xpos == 0 && segment == 0) {result = 0; delay(100);} 
+ else if(xpos == 0 && segment == 1) {result = 0; delay(100);}
+ else if(xpos == 0 && segment == 2) {result = 1; delay(100);}
+ else if(xpos == 0 && segment == 3) {result = 2; delay(100);}
  //moving left
- if(xpos > 6 && result == 0) result = 1;
- if(xpos > 6 && result == 1) result = 2;
- if(xpos > 6 && result == 2) result = 3;
- if(xpos > 6 && result == 3) result = 3;
- */
+ else if(xpos == 7 && segment == 0) {result = 1; delay(100);}
+ else if(xpos == 7 && segment == 1) {result = 2; delay(100);}
+ else if(xpos == 7 && segment == 2) {result = 3; delay(100);}
+ else if(xpos == 7 && segment == 3) {result = 3; delay(100);}
+ else result = segment;
+ 
  return(result); 
 
-  
 }
 
 
