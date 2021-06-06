@@ -38,6 +38,8 @@ int Ypos  = 0; //Position in Y axis
 int Xdir  = 0; //Direction in X axis
 int Ydir  = 0; //Direction in Y axis
 int Tloop = 200;
+bool Opt_Serial = false; //option to enable serial monitor
+bool Opt_ExLed = true;   //option to use extra led
 //============================================
 // Setup Module: code runs 1x at start
 //============================================
@@ -47,7 +49,11 @@ void setup() {
    
   pinMode(2,OUTPUT);         //set D2 pin as Output
   digitalWrite(2,HIGH);      //activate D2 to control Joystick
-  Serial.begin(9600);        //activate serial monitor, use Serial.print(var) to view status
+  if(Opt_ExLed) { pinMode(3,OUTPUT);
+                  digitalWrite(3,HIGH);      //test to activate LED
+                  delay(3000);
+                  digitalWrite(3,LOW);}
+  if(Opt_Serial) Serial.begin(9600);        //activate serial monitor, use Serial.print(var) to view status
   //initialize display
   for(int i=0;i<4;i++){
     lc.shutdown(i,false);
@@ -77,7 +83,7 @@ void loop() {
   Ydir = moveDir(Yaxis, Ydir);
 
   //Change position of segment if needed
-  Psegm = jumpSegment(Yaxis, Psegm);
+  Psegm = jumpSegment(Xaxis, Psegm);
   
   //set state of LED
   lc.setLed(Psegm,Xdir,Ydir,true);
