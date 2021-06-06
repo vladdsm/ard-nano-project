@@ -84,6 +84,8 @@ void setup() {
     lc.setIntensity(i,2);
     lc.clearDisplay(i);
   }
+  //create doors
+  makeDoors();
   
 }
 //============================================
@@ -115,7 +117,11 @@ void loop() {
   delay(Tloop);
   lc.setLed(Psegm,Xdir,Ydir,false);
 
- 
+  //check of goal
+  litLed(Xdir, Ydir, Psegm);
+
+  //create doors
+  makeDoors();
   
 }
 //============================================
@@ -134,17 +140,17 @@ int jumpSegment(int xpos, int segment){
  //@Return: Function returns integer value from 0 to 3
  int result = 0;
  
-// //moving right
-// if(xpos == 0 && segment == 0) {result = 0; delay(100);} 
-// else if(xpos == 0 && segment == 1) {result = 0; delay(100);}
-// else if(xpos == 0 && segment == 2) {result = 1; delay(100);}
-// else if(xpos == 0 && segment == 3) {result = 2; delay(100);}
-// //moving left
-// else if(xpos == 7 && segment == 0) {result = 1; delay(100);}
-// else if(xpos == 7 && segment == 1) {result = 2; delay(100);}
-// else if(xpos == 7 && segment == 2) {result = 3; delay(100);}
-// else if(xpos == 7 && segment == 3) {result = 3; delay(100);}
-// else result = segment;
+ //moving right
+ if(xpos == 0 && segment == 0) {result = 0; delay(100);} 
+ else if(xpos == 0 && segment == 1) {result = 0; delay(100);}
+ else if(xpos == 0 && segment == 2) {result = 1; delay(100);}
+ else if(xpos == 0 && segment == 3) {result = 2; delay(100);}
+ //moving left
+ else if(xpos == 7 && segment == 0) {result = 1; delay(100);}
+ else if(xpos == 7 && segment == 1) {result = 2; delay(100);}
+ else if(xpos == 7 && segment == 2) {result = 3; delay(100);}
+ else if(xpos == 7 && segment == 3) {result = 3; delay(100);}
+ else result = segment;
  
  return(result); 
 
@@ -164,6 +170,34 @@ int moveDir (int AxPos, int oldpos) {
  return(result);
 }
 
+void litLed(int xPos, int yPos, int zSegm) {
+ //@Purpose: change status of extra LED 
+ //@xPos  integer, position on x axis
+ //@yPos  integer, position on y axis
+ //@zSegm integer, position of segment
+ //@Return: Function lit LED only when both positions are on extreme edges
+  if(zSegm == 0) {
+      if((xPos >= 2 || xPos <= 5) && yPos == 7) {digitalWrite(3,HIGH);} 
+    } else if(zSegm == 3) {
+      if((xPos >= 2 || xPos <= 5) && yPos == 0) {digitalWrite(3,HIGH);} 
+    } else {digitalWrite(3,LOW);}
+   
+  }
+
+void makeDoors(){
+ //@Purpose: creates doors on the edges of LED playzone 
+ //@Return: Function lit LED to represent doors
+     //set state of LED
+  lc.setLed(0,7,7,true);
+  lc.setLed(0,6,7,true);
+  lc.setLed(0,1,7,true);
+  lc.setLed(0,0,7,true);
+
+  lc.setLed(3,7,0,true);
+  lc.setLed(3,6,0,true);
+  lc.setLed(3,1,0,true);
+  lc.setLed(3,0,0,true);
+  }  
 //============================================
 // End Of User Defined Functions
 //============================================
